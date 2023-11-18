@@ -1,0 +1,688 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-background: #191d88;
+  --dark-battlefield: #1450a3;
+  --fail-shot-color: #337ccf;
+  --success-shot-color: #ffc436;
+  --ship-color: #35a29f;
+  --ship-sank-color: #bb2525;
+}
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(img/main_bg.jpeg);
+  background-position: center center;
+  background-origin: content-box;
+  background-size: cover;
+  background-attachment: fixed;
+  z-index: -2;
+}
+
+.lightning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(img/main_bg.jpeg);
+  background-position: center center;
+  background-origin: content-box;
+  background-size: cover;
+  z-index: -1;
+}
+
+.flashit {
+  -webkit-animation: flash ease-out 43s infinite;
+  -moz-animation: flash ease-out 3s infinite;
+  animation: flash ease-out 3s infinite;
+  animation-delay: 1.2s;
+}
+
+.header {
+  font-family: "Black Ops One", sans-serif;
+  font-size: 10rem;
+  color: black;
+  font-weight: 900;
+  text-align: center;
+  margin: 8rem auto auto auto;
+  animation: blink alternate 4s infinite 2s;
+}
+
+.startGameBtn {
+  position: fixed;
+  z-index: 1000;
+  font-family: "Black Ops One", sans-serif;
+  color: white;
+  text-align: center;
+  font-size: 7rem;
+  margin: 25% auto auto auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.startGameBtn:hover {
+  color: black;
+  text-shadow: 3px 3px white, -3px -3px white;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+
+/* Battlefield */
+
+.battlefield-wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--fail-shot-color);
+}
+
+.board-header {
+  position: fixed;
+  top: 0;
+  height: 10vh;
+  width: 100%;
+  padding: 4vh;
+  font-family: "Black Ops One", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+  background-color: var(--dark-battlefield);
+}
+
+span {
+  margin: 0 15px;
+  line-height: 0.7;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  animation: span 3s ease-in infinite alternate;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  @media (max-width: 600px) {
+    transform: scale(0.65);
+  }
+}
+
+.letter {
+  display: inline-flex;
+  min-height: 1.5rem;
+  width: 27px;
+  background-color: firebrick;
+  transform: translateY(0.25rem);
+  border: 3px groove #ffc436;
+  border-radius: 15px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.75), inset 0 0 2px rgba(0, 0, 0, 0.45);
+  animation: letter 3s ease-in-out infinite alternate;
+}
+
+@keyframes span {
+  0%,
+  30% {
+    margin: 0 15px;
+  }
+  70%,
+  100% {
+    margin: 0 5px;
+  }
+
+  85%,
+  100% {
+    text-decoration-line: line-through;
+    text-decoration-color: firebrick;
+  }
+}
+
+@keyframes letter {
+  0%,
+  30% {
+    width: 27px;
+  }
+  70%,
+  100% {
+    width: 25vw;
+  }
+
+  90%,
+  100% {
+    background-color: #ffc436;
+    border: 6px groove firebrick;
+  }
+}
+
+.block {
+  text-align: center;
+}
+
+h2 {
+  margin: 1rem;
+  font-size: 5rem;
+  color: #ffc436;
+  font-family: "Black Ops One", sans-serif;
+  text-shadow: 3px 3px black, -3px -3px black;
+  letter-spacing: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  gap: 2px;
+  width: 42vw;
+  height: 42vw;
+  margin: auto auto;
+  border: 1rem solid var(--dark-background);
+  border-radius: 5px;
+  background-color: var(--dark-battlefield);
+}
+
+.cell {
+  background-color: #a5dee5;
+  border-radius: 2px;
+  cursor: crosshair;
+}
+
+#computer .cell {
+  background-color: #aaaaaa;
+}
+
+.cell:hover,
+#computer .cell:hover {
+  background-color: #ddd;
+}
+
+.cell.has-ship {
+  background-color: var(--ship-color);
+}
+
+ul.details {
+  margin: 1rem;
+  text-align: center;
+  list-style-type: none;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+#you .cell.attacked,
+#computer .cell.attacked {
+  background-color: var(--fail-shot-color);
+}
+
+#you .has-ship.attacked,
+#computer .has-ship.attacked {
+  background-color: var(--success-shot-color);
+}
+
+#you .has-ship.attacked.sunk,
+#computer .has-ship.attacked.sunk {
+  animation: sinking 2s 0.5s linear forwards;
+  background-color: var(--ship-sank-color);
+  box-shadow: 0 0 0 0 rgb(244, 77, 0);
+}
+
+#game-over-modal {
+  flex-direction: column;
+  margin: auto auto;
+  height: 100%;
+  width: 100%;
+  background: var(--dark-battlefield);
+  border: black 5px solid;
+}
+
+#game-over-modal h2 {
+  text-align: center;
+  font-family: "Black Ops One", sans-serif;
+  font-size: 8rem;
+  color: black;
+  text-shadow: 2px 2px white, -2px -2px white, 5px 5px gold, -5px -5px gold;
+}
+
+#game-over-modal h3 {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 20px;
+  color: black;
+  text-shadow: 1px 1px white, -1px -1px white;
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+#new-game-button {
+  font-family: "Black Ops One", sans-serif;
+  color: black;
+  text-shadow: 3px 3px white, -3px -3px white;
+  font-size: 5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#new-game-button:hover {
+  color: white;
+  text-shadow: 3px 3px black, -3px -3px black;
+}
+
+@keyframes sinking {
+  45%,
+  55% {
+    box-shadow: 0px 0px 10px 20px rgba(241, 244, 0, 0),
+      0px 0px 5px 10px rgba(255, 147, 5, 0.877);
+  }
+
+  75%,
+  85% {
+    border-radius: 100%;
+    transform: scale(2);
+    background: radial-gradient(circle, goldenrod, transparent 50%);
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0% {
+    text-shadow: 3px 3px white, -3px -3px #444;
+  }
+
+  25% {
+    text-shadow: 3px 3px white, -3px -3px #444;
+  }
+
+  45% {
+    color: black;
+  }
+
+  50% {
+    color: orangered;
+    filter: brightness(3);
+  }
+
+  55% {
+    color: black;
+  }
+
+  75% {
+    text-shadow: 3px 3px #444, -3px -3px white;
+  }
+
+  100% {
+    text-shadow: 3px 3px #444, -3px -3px white;
+  }
+}
+
+@keyframes flash {
+  from {
+    opacity: 0;
+  }
+  92% {
+    background-attachment: fixed;
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+    -o-filter: brightness(3);
+    -moz-filter: brightness(3);
+    z-index: -1;
+    opacity: 0;
+  }
+  93% {
+    background-attachment: fixed;
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+    -o-filter: brightness(3);
+    -moz-filter: brightness(3);
+    z-index: -1;
+    opacity: 0.6;
+  }
+  94% {
+    background-attachment: fixed;
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+    -o-filter: brightness(3);
+    -moz-filter: brightness(3);
+    z-index: -1;
+    opacity: 0.2;
+  }
+  96% {
+    background-attachment: fixed;
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+    -o-filter: brightness(3);
+    -moz-filter: brightness(3);
+    z-index: -1;
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* 4xl */
+@media (max-width: 2560px) {
+  h2 {
+    font-size: 4rem;
+    margin-top: 5rem;
+  }
+  .board {
+    width: 32vw;
+    height: 32vw;
+  }
+}
+
+/* 3xl */
+@media (max-width: 1920px) {
+  .header {
+    font-size: 6rem;
+  }
+
+  .startGameBtn {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+    margin-top: 5rem;
+  }
+
+  .board {
+    width: 32vw;
+    height: 32vw;
+  }
+}
+
+/* 2xl */
+@media (max-width: 1536px) {
+  .header {
+    font-size: 8rem;
+  }
+
+  .startGameBtn {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+}
+
+/* xl */
+@media (max-width: 1280px) {
+  .header {
+    font-size: 6rem;
+    margin: 6rem auto auto auto;
+  }
+
+  .startGameBtn {
+    font-size: 4rem;
+  }
+
+  .board-header {
+    padding: 3.5vh;
+  }
+
+  h2 {
+    margin: 4rem auto 2rem auto;
+    font-size: 3rem;
+  }
+
+  ul.details {
+    font-size: 2.5rem;
+  }
+}
+
+/* lg */
+@media (max-width: 1024px) {
+  .header {
+    font-size: 5rem;
+    margin: 6rem auto auto auto;
+  }
+
+  .startGameBtn {
+    font-size: 3.5rem;
+  }
+
+  .board-header {
+    font-size: 2.5rem;
+  }
+
+  .letter {
+    min-height: 1.3rem;
+    width: 25px;
+    transform: translateY(0.1rem);
+  }
+
+  h2 {
+    margin: 3rem auto 1rem auto;
+    font-size: 2.5rem;
+    letter-spacing: 0.75rem;
+  }
+
+  .board {
+    border: 0.7rem solid var(--dark-background);
+  }
+
+  ul.details {
+    font-size: 1.6rem;
+    font-weight: 560;
+  }
+}
+
+/* md */
+@media (max-width: 768px) {
+  .header {
+    font-size: 4rem;
+    margin: 4rem auto 1rem auto;
+  }
+
+  .startGameBtn {
+    font-size: 2.8rem;
+  }
+
+  .board-header {
+    padding: 3.5vh;
+    font-size: 2rem;
+  }
+
+  .letter {
+    min-height: 1rem;
+    width: 18px;
+    border: 2px groove #ffc436;
+  }
+
+  @keyframes letter {
+    0%,
+    30% {
+      width: 18px;
+    }
+    70%,
+    100% {
+      width: 25vw;
+    }
+
+    90%,
+    100% {
+      background-color: #ffc436;
+      border: 4px groove firebrick;
+    }
+  }
+
+  h2 {
+    letter-spacing: 0.5rem;
+  }
+
+  ul.details {
+    font-size: 1.5rem;
+    font-weight: 550;
+  }
+}
+
+/* sm */
+@media (max-width: 640px) {
+  .header {
+    font-size: 3.5rem;
+    margin: 3rem auto 2rem auto;
+  }
+
+  .startGameBtn {
+    font-size: 2.5rem;
+  }
+
+  span {
+    margin: 0 13px;
+  }
+
+  .letter {
+    transform: translateY(0.1rem);
+  }
+
+  @keyframes span {
+    0%,
+    30% {
+      margin: 0 13px;
+    }
+    70%,
+    100% {
+      margin: 0 5px;
+    }
+
+    85%,
+    100% {
+      text-decoration-line: line-through;
+      text-decoration-color: firebrick;
+    }
+  }
+
+  h2 {
+    margin: 0.8rem;
+    font-size: 2rem;
+  }
+
+  ul.details {
+    font-size: 1.3rem;
+  }
+
+  #game-over-modal h2 {
+    font-size: 6rem;
+  }
+
+  #game-over-modal h3 {
+    margin-top: auto;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  #new-game-button {
+    margin-top: 2rem;
+    font-size: 3rem;
+  }
+}
+
+/* xs */
+@media (max-width: 475px) {
+  .header {
+    font-size: 3rem;
+    margin: 3rem auto 3rem auto;
+  }
+
+  .startGameBtn {
+    font-size: 2rem;
+  }
+
+  .board-header {
+    padding: 3vh;
+  }
+
+  span {
+    margin: 0 10px;
+  }
+
+  @keyframes span {
+    0%,
+    30% {
+      margin: 0 10px;
+    }
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .wrapper {
+    gap: 2%;
+  }
+
+  .block {
+    position: relative;
+    top: -40px;
+  }
+
+  ul.details {
+    font-size: 1.2rem;
+    font-weight: 520;
+  }
+}
+
+/* 2xs */
+@media (max-width: 375px) {
+  .board-header {
+    padding: 4vh;
+  }
+
+  span {
+    margin: 0 8px;
+  }
+
+  .letter {
+    width: 10px;
+  }
+
+  @keyframes span {
+    0%,
+    30% {
+      margin: 0 8px;
+    }
+    70%,
+    100% {
+      margin: 0 3px;
+    }
+  }
+
+  @keyframes letter {
+    0%,
+    30% {
+      width: 10px;
+    }
+    70%,
+    100% {
+      width: 15vw;
+    }
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .board {
+    width: 45vw;
+    height: 45vw;
+  }
+
+  ul.details {
+    font-size: 1.3rem;
+  }
+}
