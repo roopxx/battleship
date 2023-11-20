@@ -78,9 +78,6 @@ class Player {
       } while (this.previousMoves.has(randomXY.toString()));
     } else {
       do {
-        this.targetStack = this.targetStack.filter(
-          (item) => ![...this.previousMoves].includes(item)
-        );
         randomXY = this.targetStack.pop();
       } while (this.previousMoves.has(randomXY.toString()));
     }
