@@ -170,7 +170,7 @@ class GameBoard {
     // Add cascading explosion animation when the ship is sunk
     if (sunk) {
       const shipCells = document.querySelectorAll(
-        `[data-ship='${ship.shipName}']`
+        `#${this.name.toLowerCase()} [data-ship='${ship.shipName}']`
       );
       let delay = 0;
       shipCells.forEach((cell) => {
