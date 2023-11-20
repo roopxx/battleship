@@ -164,7 +164,6 @@ class GameBoard {
 
     if (hitWasSuccess) {
       domCell.classList.add("has-ship");
-      console.log(domCell);
       domCell.dataset.ship = ship.shipName;
     }
 
