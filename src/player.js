@@ -35,9 +35,7 @@ class Player {
     }
 
     // Check if the target cell has been attacked before
-    if (
-      this.opponent.battlefield.board[attackX][attackY].beenAttacked === true
-    ) {
+    if (this.opponent.battlefield.board[attackX][attackY].beenAttacked) {
       this.myTurn = true;
       this.opponent.myTurn = false;
       return "Duplicate attack";
@@ -77,9 +75,7 @@ class Player {
         randomXY = [X, Y];
       } while (this.previousMoves.has(randomXY.toString()));
     } else {
-      do {
-        randomXY = this.targetStack.pop();
-      } while (this.previousMoves.has(randomXY.toString()));
+      randomXY = this.targetStack.pop();
     }
 
     // Store the unique move in the previousMoves set

@@ -75,8 +75,9 @@ class Game {
           }
 
           // Check the game status again after the turn
-          this.checkGameStatus();
-        }, 1750); //  milliseconds delay for better user experience
+        }, 500); //  milliseconds delay for better user experience
+
+        this.checkGameStatus();
       }
     }
   }
